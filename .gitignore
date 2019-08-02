@@ -1,1 +1,5 @@
+# Location of the mp3/ogg files
 audio/music/
+
+# SPI-Py Python library
+SPI-Py/
