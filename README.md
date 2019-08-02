@@ -22,16 +22,16 @@ Tiny Stereo is a Python project made to turn the Raspberry Pi into a miniature m
 ## GPIO Pins
 Use the following setup for the MFRC522:
 
-| Name | Pin name   |
-|:----:|:----------:|
-| SDA  | GPIO8      |
-| SCK  | GPIO11     |
-| MOSI | GPIO10     |
-| MISO | GPIO9      |
-| IRQ  | None       |
-| GND  | Ground     |
-| RST  | GPIO25     |
-| 3.3V | 3V3        |
+| MFRC522 | Pi         |
+|:-------:|:----------:|
+| SDA     | GPIO8      |
+| SCK     | GPIO11     |
+| MOSI    | GPIO10     |
+| MISO    | GPIO9      |
+| IRQ     | None       |
+| GND     | Ground     |
+| RST     | GPIO25     |
+| 3.3V    | 3V3        |
 
 The GPIO setup of the other devices are optional. You can edit them in the config file, but I suggest keeping the power button connected to GPIO3 (PIN #5) if you want the power-up button to function properly.
 
@@ -43,7 +43,9 @@ The GPIO setup of the other devices are optional. You can edit them in the confi
 5. Pair the music 
 6. Edit /path/to/Tiny-Stereo/config.py to match your own settings.
 7. Use `> sudo nano /etc/rc.local` and add the following lines to automatically start the script at boot:
+
 `python /path/to/Tiny-Stereo/app.py
+
 exit 0`
 
 ## Usage
