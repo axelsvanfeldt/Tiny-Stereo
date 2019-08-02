@@ -4,25 +4,26 @@ import time
 import unidecode
 import RPi.GPIO as GPIO
 from RPLCD.gpio import CharLCD
+import config as cfg
 
 lcd = False
 
-def initialize(config):
+def initialize():
     try:
         GPIO.setwarnings(False)
         GPIO.setmode(GPIO.BCM)
         global lcd
-        lcd = CharLCD(cols=16, rows=2, pin_rs=config["pins"]["LCD"]["BCM"]["rs"], pin_e=config["pins"]["LCD"]["BCM"]["e"], pins_data=[config["pins"]["LCD"]["BCM"]["d4"], config["pins"]["LCD"]["BCM"]["d5"], config["pins"]["LCD"]["BCM"]["d6"], config["pins"]["LCD"]["BCM"]["d7"]], numbering_mode=GPIO.BCM)
+        lcd = CharLCD(cols=16, rows=2, pin_rs=cfg.pins["LCD"]["BCM"]["rs"], pin_e=cfg.pins["LCD"]["BCM"]["e"], pins_data=[cfg.pins["LCD"]["BCM"]["d4"], cfg.pins["LCD"]["BCM"]["d5"], cfg.pins["LCD"]["BCM"]["d6"], cfg.pins["LCD"]["BCM"]["d7"]], numbering_mode=GPIO.BCM)
         lcd.clear()
         time.sleep(0.01)
         print("LCD successfully initialized.")
     except:
         print("ERROR: While initializing the LCD.")
 
-def displayText(config, message, duration):
+def displayText(currentText, message, duration):
     try:
         if lcd:
-            if message != config["current_text"]:
+            if message != currentText:
                 messageRows = message.split("^")
                 rowCount = len(messageRows)
                 fixedMessage = ""
@@ -49,10 +50,10 @@ def displayText(config, message, duration):
             return message
         else:
             print("ERROR: While displaying text to the LCD. LCD not initialized!")
-            return config["current_text"]
+            return currentText
     except:
         print("ERROR: While displaying text to the LCD.")
-        return config["current_text"]
+        return currentText
 
 def clearText():
     try:
