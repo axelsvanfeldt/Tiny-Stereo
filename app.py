@@ -165,7 +165,6 @@ def getPlaylist(data):
             audio.playSoundEffect(status["current_volume"], "error.wav")
             displayText("Empty playlist!")
     else:
-        #audio.playSoundEffect(status["current_volume"], "error.wav")
         status["current_playlist"] = []
         audio.playSoundEffect(status["current_volume"], "error.wav")
         displayText("Unknown tag!")
