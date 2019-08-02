@@ -42,11 +42,9 @@ The GPIO setup of the other devices are optional. You can edit them in the confi
 4. Populate /path/to/Tiny-Stereo/audio/music with the music of your choice. Each folder you create will serve as a playlist/album.
 5. Pair the music 
 6. Edit /path/to/Tiny-Stereo/config.py to match your own settings.
-7. Use `> sudo nano /etc/rc.local` and add the following lines to automatically start the script at boot:
-
-`python /path/to/Tiny-Stereo/app.py
-
+7. Use `> sudo nano /etc/rc.local` and add the following lines to automatically start the script at boot:  
+`python /path/to/Tiny-Stereo/app.py  
 exit 0`
 
 ## Usage
-`python /path/to/Tiny-Stereo/app.py`
+`> python /path/to/Tiny-Stereo/app.py`
