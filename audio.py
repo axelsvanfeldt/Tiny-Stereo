@@ -79,8 +79,7 @@ def finishedTrack():
     try:
         if pygame.mixer.music.get_busy():
             return False
-        else:
-            return True
+        return True
     except:
         print("ERROR: While checking if track is playing.")
         return False

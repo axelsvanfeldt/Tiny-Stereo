@@ -15,12 +15,7 @@ def authTag():
                 status = MIFAREReader.MFRC522_Auth(MIFAREReader.PICC_AUTHENT1A, 8, key, uid)
                 if status == MIFAREReader.MI_OK:
                     return True
-                else:
-                    return False
-            else:
-                return False
-        else:
-            return False
+        return False
     except:
         return False
     
@@ -51,8 +46,7 @@ def readTag():
             MIFAREReader.MFRC522_StopCrypto1()
             data = encodeTag("decode", data)
             return data
-        else:
-            return False
+        return False
     except:
         return False
                 
@@ -66,9 +60,7 @@ def writeTag(data):
                 return True
             else:
                 MIFAREReader.MFRC522_StopCrypto1()
-                return False
-        else:
-            return False
+        return False
     except:
         print("ERROR: While programming data to tag.")
         return False
