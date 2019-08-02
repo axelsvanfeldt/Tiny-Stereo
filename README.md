@@ -1,6 +1,5 @@
 # Tiny Stereo
 Tiny Stereo is a Python project made to turn the Raspberry Pi into a miniature media player using NFC tags.
-
 ...
 
 ## Software Requirements
@@ -16,12 +15,25 @@ Tiny Stereo is a Python project made to turn the Raspberry Pi into a miniature m
 - 1x Mono Amp\*\*
 - 1x Speaker\*\*
 
-* The potentiometers are optional depending on your LCD. I'm using them to control brightness and contrast of the display.
+\* The potentiometers are optional depending on your LCD. I'm using them to control brightness and contrast of the display.
 
 \*\* I'm using a [mono amp](https://learn.adafruit.com/adafruit-max98357-i2s-class-d-mono-amp) attached to a 4 ohm speaker to output sound, but feel free to use any sound device that works with the Pi.
 
 ## GPIO Pins
-Use config.py for reference on which GPIO pins to use on the Raspberry Pi.
+Use the following setup for the MFRC522:
+
+| Name | Pin name   |
+|:----:|:----------:|
+| SDA  | GPIO8      |
+| SCK  | GPIO11     |
+| MOSI | GPIO10     |
+| MISO | GPIO9      |
+| IRQ  | None       |
+| GND  | Any Ground |
+| RST  | GPIO25     |
+| 3.3V | 3V3        |
+
+The GPIO setup of other devices are optional. You can edit them in the config file, but I suggest keeping the power button on GPIO3 (PIN #5) if you want the power-up button to function properly.
 
 ## Installation
 1. Clone or download this repository to the path of your choice.
