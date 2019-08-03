@@ -1,0 +1,4 @@
+# Ignores all music
+*
+*/
+!.gitignore
