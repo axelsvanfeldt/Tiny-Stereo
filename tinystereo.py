@@ -8,20 +8,19 @@ import random
 import fcntl
 import subprocess
 import RPi.GPIO as GPIO
-import RFID
 import config as cfg
-import LCD
+import rfid
+import lcd
 import audio
 
 status = {
-    "enable_reading": True,
-    "last_read": False,
     "current_state": "read",
     "current_tag": False,
     "current_playlist": [],
     "current_track": 0,
-    "current_volume": 0.6,
-    "current_text": ""
+    "current_volume": 0.5,
+    "current_text": "",
+    "last_read": False
 }
 
 def initialize():
@@ -38,7 +37,7 @@ def initialize():
         GPIO.add_event_detect(cfg.pins["buttons"]["next"], GPIO.BOTH, callback=toggleButton, bouncetime=200)
         GPIO.add_event_detect(cfg.pins["buttons"]["volume_up"], GPIO.BOTH, callback=toggleButton, bouncetime=200)
         GPIO.add_event_detect(cfg.pins["buttons"]["volume_down"], GPIO.BOTH, callback=toggleButton, bouncetime=200)
-        LCD.initialize()
+        lcd.initialize()
         displayText("Hello!")
         audio.initialize(status["current_volume"])
         audio.playSoundEffect(status["current_volume"], "power-on.wav")
@@ -59,11 +58,12 @@ def lockFile():
     return True
 
 def exit():
-    audio.stopMusic()
+    audio.stopMusic(True)
     audio.playSoundEffect(status["current_volume"], "power-off.wav")
     displayText("Good bye!", 1)
+    time.sleep(1.5)
     GPIO.output(cfg.pins["led"], GPIO.LOW)
-    LCD.exit()
+    lcd.exit()
     GPIO.cleanup()
     subprocess.call(['shutdown', '-h', 'now'], shell=False)
     
@@ -86,18 +86,15 @@ def toggleVolume(action):
     displayText(currentText)
 
 def toggleTrack():
-    
     if status["current_state"] == "playing":
         status["current_track"] += 1
         if status["current_track"] == len(status["current_playlist"]):
             status["current_track"] = 0
         audio.playMusic(status["current_playlist"], status["current_track"])
         displayTrackInfo()
-    elif status["current_state"] == "write":
-        enterReadState()
         
 def displayText(message, duration = 0):
-    status["current_text"] = LCD.displayText(status["current_text"], message, duration)
+    status["current_text"] = lcd.displayText(status["current_text"], message, duration)
         
 def displayTrackInfo():
     displayText("Now playing:^Track " + str(status["current_track"] + 1) + "/" + str(len(status["current_playlist"])), 1)
@@ -116,35 +113,10 @@ def displayTrackInfo():
     
 def enterReadState():
     status["current_state"] = "read"
-    displayText("Tiny Stereo -^Insert music!")
-    
-def enterWriteState(data):
-    audio.playSoundEffect(status["current_volume"], "beep.wav")
-    allowWrite = False
-    if data is None or data == "":
-        allowWrite = True
-    else:
-        if data != "write":
-            displayText("Write state:^Confirm action!")
-            populatedTagInput = raw_input("The inserted tag is already populated with '" + data + "'.\nEnter Y/N to proceed: ")
-            if populatedTagInput.lower() == "y":
-                allowWrite = True
-    if allowWrite:
-        displayText("Write state:^Name the tag!")
-        nameTagInput = raw_input("Populate the inserted tag with the name of your choice. Max 16 characters!\nEnter name: ")
-        dataWritten = False
-        endTime = time.time() + 2.5
-        while time.time() < endTime:
-            if dataWritten == False:
-                if RFID.writeTag(nameTagInput):
-                    dataWritten = True
-                    audio.playSoundEffect(status["current_volume"], "write.wav")
-                    displayText("Write state:^Success!")
-    enterReadState()
-    status["current_tag"] = False
+    displayText("Tiny Stereo -^Insert tag!")
         
 def noTag():
-    if status["last_read"] and status["current_state"] != "write":
+    if status["last_read"]:
         if time.time() - status["last_read"] > 2.5:
             audio.stopMusic("fade")
             enterReadState()
@@ -171,7 +143,7 @@ def getPlaylist(data):
         
 def getTag():
     try:
-        data = RFID.readTag()
+        data = rfid.readTag()
         if data == False:
             noTag()
         else:
@@ -186,26 +158,19 @@ def getTag():
                 status["current_track"] = 0
                 status["current_playlist"] = []
                 audio.stopMusic()
-                if data == "write":
-                    status["current_state"] = "write"
-                    audio.c("write.wav")
-                    displayText("Write state:^Insert tag!")
                 else:
-                    if status["current_state"] == "write":
-                        enterWriteState(data)
+                    if data == "":
+                        audio.playSoundEffect(status["current_volume"], "error.wav")
+                        displayText("Empty tag!")
                     else:
-                        if data == "":
-                            audio.playSoundEffect(status["current_volume"], "error.wav")
-                            displayText("Empty tag!")
-                        else:
-                            getPlaylist(data)
+                        getPlaylist(data)
         time.sleep(0.5)
     except:
         pass
     
 initialize()
 
-while status["enable_reading"]:
+while True:
     try:
         getTag()
     except KeyboardInterrupt:
