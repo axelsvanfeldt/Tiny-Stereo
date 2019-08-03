@@ -39,8 +39,8 @@ The GPIO setup of the other devices are optional, but I suggest keeping the powe
 1. Clone or download this repository to the path of your choice.
 2. Use `> sudo raspi-config` to make sure that the SPI interface on your Raspberry Pi is enabled.
 3. Install the SPI-Py package from https://github.com/lthiery/SPI-Py.
-4. Populate /path/to/Tiny-Stereo/audio/music with the music of your choice.  Each folder you create will serve as a playlist/album.
-5. Use `> python /path/to/Tiny-Stereo/write.py` and follow the instructions to pair tags with the playlists/albums you added in step 4. This step requires a monitor/remote control access as you need to see the terminal of the Pi.
+4. Populate /path/to/Tiny-Stereo/audio/music with the music of your choice. Each folder you create will serve as a playlist/album.
+5. Use `> python /path/to/Tiny-Stereo/write.py` and follow the instructions to pair your NFC tags with the playlists/albums you added in step 4. This step requires a monitor/remote control access as you need to see the terminal of the Pi.
 6. Edit /path/to/Tiny-Stereo/config.py to match your own settings.
 7. Use `> sudo nano /etc/rc.local` and add the following lines to automatically start the script at boot:  
 `python /path/to/Tiny-Stereo/tinystereo.py  
