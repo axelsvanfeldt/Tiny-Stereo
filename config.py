@@ -1,7 +1,10 @@
+# The location of the script
 path = "/home/pi/TinyStereo/"
 
-# GPIO pins on the Raspberry Pi - using BCM mode.
+# GPIO pins (BCM) on the Raspberry Pi. 
+# Set "warnings" to True if you wish to render GPIO warnings.
 pins = {
+    "warnings": False,
     "led":  14,
     "buttons": {
         "power": 3,
