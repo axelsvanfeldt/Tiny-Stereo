@@ -4,6 +4,17 @@ import MFRC522
 
 MIFAREReader = MFRC522.MFRC522()
 
+def readTag():
+    try:
+        if authTag():
+            data = MIFAREReader.MFRC522_Read(8)
+            MIFAREReader.MFRC522_StopCrypto1()
+            data = encodeTag("decode", data)
+            return data
+        return False
+    except:
+        return False
+
 def authTag():
     try:
         (status,TagType) = MIFAREReader.MFRC522_Request(MIFAREReader.PICC_REQIDL)
@@ -36,19 +47,7 @@ def encodeTag(action, data):
                     translation += chr(sector)
         return translation
     except:
-        print("ERROR: While reading encoding/decoding data from tag.")    
-    
-
-def readTag():
-    try:
-        if authTag():
-            data = MIFAREReader.MFRC522_Read(8)
-            MIFAREReader.MFRC522_StopCrypto1()
-            data = encodeTag("decode", data)
-            return data
-        return False
-    except:
-        return False
+        print("ERROR: While reading encoding/decoding data from tag.")
                 
 def writeTag(data):
     try:
