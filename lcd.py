@@ -13,18 +13,7 @@ def initialize():
         GPIO.setwarnings(False)
         GPIO.setmode(GPIO.BCM)
         global lcd
-        lcd = CharLCD(
-            cols=16,
-            rows=2
-            pin_rs=cfg.pins["LCD"]["BCM"]["rs"],
-            pin_e=cfg.pins["LCD"]["BCM"]["e"],
-            pins_data=[cfg.pins["LCD"]["BCM"]["d4"],
-                cfg.pins["LCD"]["BCM"]["d5"],
-                cfg.pins["LCD"]["BCM"]["d6"],
-                cfg.pins["LCD"]["BCM"]["d7"]
-            ],
-            numbering_mode=GPIO.BCM
-        )
+        lcd = CharLCD(cols=16, rows=2, pin_rs=cfg.pins["lcd"]["rs"], pin_e=cfg.pins["lcd"]["e"], pins_data=[cfg.pins["lcd"]["d4"], cfg.pins["lcd"]["d5"], cfg.pins["lcd"]["d6"], cfg.pins["lcd"]["d7"]], numbering_mode=GPIO.BCM)
         lcd.clear()
         time.sleep(0.01)
         print("LCD successfully initialized.")
