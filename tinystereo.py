@@ -160,7 +160,7 @@ def getTag():
                 audio.stopMusic()
                 if data == "":
                     audio.playSoundEffect(status["current_volume"], "error.wav")
-                displayText("Empty tag!")
+                    displayText("Empty tag!")
                 else:
                     getPlaylist(data)
         time.sleep(0.5)
