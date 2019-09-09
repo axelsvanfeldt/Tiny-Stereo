@@ -119,9 +119,9 @@ def noTag():
     if status["last_read"]:
         if time.time() - status["last_read"] > 2.5:
             audio.stopMusic("fade")
-            enterReadState()
             status["current_tag"] = False
             status["last_read"] = False
+            enterReadState()
             
 def getPlaylist(data):
     playlist = audio.getPlaylist(data)
