@@ -28,6 +28,7 @@ def initialize():
     lcd.initialize()
     audio.initialize(0.5)
     audio.playSoundEffect(0.5, "power-on.wav")
+    displayText("Write state:^Insert tag!")
     time.sleep(1)
 
 def exit():
