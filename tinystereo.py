@@ -38,7 +38,7 @@ def initialize():
         GPIO.add_event_detect(cfg.pins["buttons"]["volume_up"], GPIO.BOTH, callback=toggleButton, bouncetime=200)
         GPIO.add_event_detect(cfg.pins["buttons"]["volume_down"], GPIO.BOTH, callback=toggleButton, bouncetime=200)
         lcd.initialize()
-        displayText("Hello!")
+        displayText("Tiny Stereo -^Insert tag!")
         audio.initialize(status["current_volume"])
         audio.playSoundEffect(status["current_volume"], "power-on.wav")
         time.sleep(1)
