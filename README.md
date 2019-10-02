@@ -2,6 +2,7 @@
 Tiny Stereo is a Python project made to turn the Raspberry Pi into a miniature media player using NFC tags.
 
 ## Software Requirements
+- Rasbian (or any other suitable OS)
 - [SPI-Py](https://github.com/lthiery/SPI-Py)
 - Some music (MP3 or Ogg)
 
@@ -32,7 +33,7 @@ Use the following setup for the MFRC522:
 | RST     | GPIO25     |
 | 3.3V    | 3V3        |
 
-The GPIO setup of the other devices are optional, but I suggest keeping the power button connected to GPIO3 (PIN #5) if you want the power-up button to function properly.
+The GPIO setup of the other devices are optional, but I suggest keeping the power button connected to GPIO3 (PIN #5) if you want the button to turn the unit on when turned off.
 
 ## Installation
 1. Clone or download this repository to the path of your choice.
