@@ -25,7 +25,7 @@ status = {
 
 def initialize():
     if lockFile():
-        GPIO.setwarnings(False)
+        GPIO.setwarnings(cfg.pins["warnings"])
         GPIO.setmode(GPIO.BCM)
         GPIO.setup(cfg.pins["buttons"]["power"], GPIO.IN, pull_up_down=GPIO.PUD_UP)
         GPIO.setup(cfg.pins["buttons"]["next"], GPIO.IN, pull_up_down=GPIO.PUD_UP)
